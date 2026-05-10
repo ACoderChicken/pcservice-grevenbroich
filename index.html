@@ -6,7 +6,6 @@
     <title>PC-Service Grevenbroich</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* CSS Değişkenleri ve Temalar */
         :root {
             --bg-color: #ffffff;
             --text-color: #121212;
@@ -15,6 +14,7 @@
             --border-color: #e0e0e0;
             --accent-color: #000000;
             --accent-text: #ffffff;
+            --discount-color: #ff4d4d;
             --wa-color: #25D366;
             --transition: all 0.3s ease;
         }
@@ -29,539 +29,243 @@
             --accent-text: #000000;
         }
 
-        /* Genel Stiller */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); transition: var(--transition); line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: var(--transition);
-            line-height: 1.6;
-        }
+        header { display: flex; justify-content: flex-end; padding: 20px 0; }
+        .theme-toggle { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); cursor: pointer; padding: 10px; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: var(--transition); user-select: none; }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .hero { text-align: center; padding: 60px 0 40px; }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 10px; }
+        .hero p { color: var(--secondary-text); font-size: 1.1rem; }
 
-        /* Header & Tema Butonu */
-        header {
-            display: flex;
-            justify-content: flex-end;
-            padding: 20px 0;
-        }
+        .section-title { font-size: 1.5rem; font-weight: 600; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); }
+        .about-text { color: var(--secondary-text); font-size: 1.05rem; }
 
-        .theme-toggle {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: var(--transition);
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+        /* Accordion & Fiyatlar */
+        .accordion { display: flex; flex-direction: column; gap: 12px; }
+        .accordion-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; transition: var(--transition); }
+        .accordion-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px; background: transparent; border: none; color: var(--text-color); cursor: pointer; }
+        
+        .plan-info { display: flex; flex-direction: column; align-items: flex-start; }
+        .plan-title { font-weight: 600; font-size: 1.1rem; }
+        
+        .price-container { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+        .old-price { text-decoration: line-through; color: var(--secondary-text); font-size: 0.85rem; opacity: 0.7; }
+        .current-price { background: var(--accent-color); color: var(--accent-text); padding: 5px 12px; border-radius: 20px; font-size: 0.95rem; font-weight: 800; }
 
-        .theme-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        /* Hero Bölümü */
-        .hero {
-            text-align: center;
-            padding: 60px 0 40px;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            color: var(--secondary-text);
-            font-size: 1.1rem;
-        }
-
-        /* Bölüm Başlıkları */
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin: 40px 0 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        /* Hakkımda */
-        .about-text {
-            color: var(--secondary-text);
-            font-size: 1.05rem;
-            text-align: justify;
-        }
-
-        /* Planlar (Accordion) */
-        .accordion {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .accordion-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .accordion-header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 20px;
-            background: transparent;
-            border: none;
-            color: var(--text-color);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: left;
-            transition: var(--transition);
-        }
-
-        .accordion-header:hover {
-            background: rgba(128, 128, 128, 0.05);
-        }
-
-        .plan-price {
-            background: var(--accent-color);
-            color: var(--accent-text);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 800;
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: var(--card-bg);
-        }
-
-        .accordion-content p {
-            padding: 0 20px 18px;
-            color: var(--secondary-text);
-            font-size: 0.95rem;
-        }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .accordion-content p { padding: 0 20px 20px; color: var(--secondary-text); font-size: 0.95rem; }
 
         /* Çalışma Saatleri */
-        .hours-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-        }
+        .hours-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        .hour-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 10px; text-align: center; }
+        .hour-card strong { display: block; font-size: 1rem; }
+        .hour-card span { color: var(--secondary-text); font-size: 0.85rem; }
 
-        .hour-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .hour-card strong {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 1.1rem;
-        }
-
-        .hour-card span {
-            color: var(--secondary-text);
-            font-size: 0.9rem;
-        }
-
-        /* WhatsApp Butonu */
-        .whatsapp-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--wa-color);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 30px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-            transition: transform 0.3s ease;
-            z-index: 100;
-        }
-
-        .whatsapp-btn:hover {
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        /* Modallar (Şifre ve Admin) */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-color);
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid var(--border-color);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: var(--secondary-text);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            border-radius: 6px;
-            font-family: inherit;
-        }
-
-        .admin-plan-card {
-            border: 1px dashed var(--border-color);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            margin-top: 10px;
-        }
-
-        .btn-primary {
-            background: var(--accent-color);
-            color: var(--accent-text);
-        }
+        /* WhatsApp & Modals */
+        .whatsapp-btn { position: fixed; bottom: 30px; right: 30px; background: var(--wa-color); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 100; transition: transform 0.3s; }
+        .whatsapp-btn:hover { transform: scale(1.1); }
         
-        .btn-secondary {
-            background: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-        }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: var(--bg-color); padding: 25px; border-radius: 15px; width: 90%; max-width: 500px; border: 1px solid var(--border-color); max-height: 85vh; overflow-y: auto; }
+        
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.8rem; margin-bottom: 4px; color: var(--secondary-text); }
+        .form-control { width: 100%; padding: 10px; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); border-radius: 8px; }
+        
+        .admin-plan-card { border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px; }
+        .btn { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; }
+        .btn-primary { background: var(--accent-color); color: var(--accent-text); }
+        .btn-secondary { background: transparent; color: var(--secondary-text); }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Header / Tema Toggle -->
         <header>
-            <button id="theme-toggle" class="theme-toggle" title="Tema Değiştir (Admin girişi için 5 sn basılı tut)">
-                🌙
-            </button>
+            <button id="theme-toggle" class="theme-toggle">🌙</button>
         </header>
 
-        <!-- Hero -->
         <section class="hero">
             <h1>PC-Service Grevenbroich</h1>
             <p>Schnell. Zuverlässig. Professionell.</p>
         </section>
 
-        <!-- Hakkımda -->
         <section>
             <h2 class="section-title">Über Mich</h2>
             <p class="about-text">
                 Hallo! Ich bin ein junger, technikbegeisterter IT-Techniker aus Grevenbroich. 
-                Mit großer Leidenschaft kümmere ich mich um deine PC-Probleme – schnell, zuverlässig und zu fairen Preisen. 
-                Egal ob Reinigung, Neuinstallation oder Software-Fehler, dein Gerät ist bei mir in besten Händen.
+                Mit großer Leidenschaft kümmere ich mich um deine PC-Probleme – schnell, zuverlässig und zu fairen Preisen.
             </p>
         </section>
 
-        <!-- Planlar -->
         <section>
             <h2 class="section-title">Preise & Pläne</h2>
-            <div id="plans-container" class="accordion">
-                <!-- JavaScript ile doldurulacak -->
-            </div>
+            <div id="plans-container" class="accordion"></div>
         </section>
 
-        <!-- Çalışma Saatleri -->
         <section>
             <h2 class="section-title">Öffnungszeiten</h2>
             <div class="hours-grid">
-                <div class="hour-card"><strong>Montag</strong><span>16:00 - 19:00</span></div>
-                <div class="hour-card"><strong>Dienstag</strong><span>15:00 - 19:00</span></div>
-                <div class="hour-card"><strong>Mittwoch</strong><span>16:00 - 19:00</span></div>
-                <div class="hour-card"><strong>Donnerstag</strong><span>15:00 - 19:00</span></div>
-                <div class="hour-card"><strong>Freitag</strong><span>15:00 - 19:00</span></div>
-                <div class="hour-card"><strong>Samstag</strong><span>14:00 - 19:00</span></div>
+                <div class="hour-card"><strong>Mo</strong><span>16:00 - 19:00</span></div>
+                <div class="hour-card"><strong>Di</strong><span>15:00 - 19:00</span></div>
+                <div class="hour-card"><strong>Mi</strong><span>16:00 - 19:00</span></div>
+                <div class="hour-card"><strong>Do</strong><span>15:00 - 19:00</span></div>
+                <div class="hour-card"><strong>Fr</strong><span>15:00 - 19:00</span></div>
+                <div class="hour-card"><strong>Sa</strong><span>14:00 - 19:00</span></div>
             </div>
         </section>
-        
-        <br><br><br> <!-- Bottom padding for WhatsApp button -->
     </div>
 
-    <!-- WhatsApp Butonu -->
-    <a href="https://wa.me/491772591116" target="_blank" class="whatsapp-btn" title="Auf WhatsApp schreiben">
-        <!-- SVG WhatsApp İkonu -->
-        <svg viewBox="0 0 32 32" width="32" height="32" fill="currentColor">
-            <path d="M16.05 2.5C8.6 2.5 2.55 8.55 2.55 16c0 2.35.6 4.65 1.75 6.65l-2.35 8.6 8.8-2.3c2 .1.05 1.15 4.3 1.7 1.7.55 16.05-8.55 16.05-16 0-7.45-6.05-13.5-13.5-13.5zm0 24.8c-2 0-3.95-.55-5.65-1.55l-.4-.25-4.2 1.1 1.1-4.1-.25-.4c-1.1-1.75-1.7-3.75-1.7-5.8 0-6.1 4.95-11.05 11.05-11.05s11.05 4.95 11.05 11.05-4.95 11-11 11zm6.05-8.15c-.35-.15-1.95-.95-2.25-1.05-.3-.1-.5-.15-.7.15-.2.3-.85 1.05-1.05 1.25-.2.2-.4.25-.75.05-2.05-1-3.65-2.5-4.75-4.5-.15-.3 0-.45.15-.6.15-.15.3-.35.45-.55.15-.2.2-.35.3-.55.1-.2.05-.4-.05-.55-.1-.15-.7-1.7-.95-2.3-.25-.6-.5-.5-.7-.5h-.6c-.2 0-.55.1-.85.45-.3.35-1.15 1.15-1.15 2.8s1.2 3.25 1.35 3.45c.15.2 2.35 3.6 5.7 5.05.8.35 1.4.55 1.9.7.8.25 1.5.2 2.05.15.65-.05 1.95-.8 2.25-1.55.3-.75.3-1.4.2-1.55-.15-.15-.35-.25-.7-.4z"/>
-        </svg>
+    <a href="https://wa.me/491772591116" target="_blank" class="whatsapp-btn">
+        <svg viewBox="0 0 32 32" width="30" height="30" fill="white"><path d="M16.05 2.5C8.6 2.5 2.55 8.55 2.55 16c0 2.35.6 4.65 1.75 6.65l-2.35 8.6 8.8-2.3c2 .1.05 1.15 4.3 1.7 1.7.55 16.05-8.55 16.05-16 0-7.45-6.05-13.5-13.5-13.5zm0 24.8c-2 0-3.95-.55-5.65-1.55l-.4-.25-4.2 1.1 1.1-4.1-.25-.4c-1.1-1.75-1.7-3.75-1.7-5.8 0-6.1 4.95-11.05 11.05-11.05s11.05 4.95 11.05 11.05-4.95 11-11 11zm6.05-8.15c-.35-.15-1.95-.95-2.25-1.05-.3-.1-.5-.15-.7.15-.2.3-.85 1.05-1.05 1.25-.2.2-.4.25-.75.05-2.05-1-3.65-2.5-4.75-4.5-.15-.3 0-.45.15-.6.15-.15.3-.35.45-.55.15-.2.2-.35.3-.55.1-.2.05-.4-.05-.55-.1-.15-.7-1.7-.95-2.3-.25-.6-.5-.5-.7-.5h-.6c-.2 0-.55.1-.85.45-.3.35-1.15 1.15-1.15 2.8s1.2 3.25 1.35 3.45c.15.2 2.35 3.6 5.7 5.05.8.35 1.4.55 1.9.7.8.25 1.5.2 2.05.15.65-.05 1.95-.8 2.25-1.55.3-.75.3-1.4.2-1.55-.15-.15-.35-.25-.7-.4z"/></svg>
     </a>
 
-    <!-- Şifre Modalı -->
     <div id="password-modal" class="modal-overlay">
         <div class="modal-content">
-            <h2>Admin Paneli Girişi</h2>
-            <div class="form-group">
-                <input type="password" id="admin-password" class="form-control" placeholder="Şifre (O harflerine dikkat)">
-            </div>
-            <button class="btn btn-primary" onclick="checkPassword()">Giriş</button>
-            <button class="btn btn-secondary" onclick="closeModals()">İptal</button>
+            <h3>Admin-Login</h3><br>
+            <input type="password" id="admin-password" class="form-control" placeholder="Passwort">
+            <button class="btn btn-primary" onclick="checkPassword()">Login</button>
+            <button class="btn btn-secondary" onclick="closeModals()">Abbrechen</button>
         </div>
     </div>
 
-    <!-- Admin Paneli Modalı -->
     <div id="admin-modal" class="modal-overlay">
         <div class="modal-content">
-            <h2>Hizmetleri Düzenle</h2>
+            <h3>Preise bearbeiten</h3><br>
             <div id="admin-forms-container"></div>
-            <button class="btn btn-primary" onclick="savePlans()">Değişiklikleri Kaydet</button>
-            <button class="btn btn-secondary" onclick="closeModals()">İptal</button>
+            <button class="btn btn-primary" onclick="savePlans()">Speichern</button>
+            <button class="btn btn-secondary" onclick="closeModals()">Schließen</button>
         </div>
     </div>
 
     <script>
-        /* Varsayılan Veriler */
         const defaultPlans = [
-            { id: 1, title: 'PC-Reinigung', price: '7,50 €', desc: 'Professionelle Innen- und Außenreinigung deines PCs. Entfernung von Staub und Verbesserung der Kühlleistung.' },
-            { id: 2, title: 'Windows 11 Installation', price: '15 €', desc: 'Fachgerechte Installation von Windows 11 inklusive aller wichtigen System-Updates und Standard-Treiber.' },
-            { id: 3, title: 'Format + Neuinstallation', price: '15 €', desc: 'Sichere Formatierung der Festplatte und saubere Neuinstallation des Betriebssystems für maximale Geschwindigkeit.' },
-            { id: 4, title: 'Alles zusammen', price: '30 €', desc: 'Das Komplettpaket: Gründliche Reinigung, komplette Formatierung und frische Neuinstallation deines Systems.' }
+            { id: 1, title: 'PC-Reinigung', oldPrice: '10 €', price: '7,50 €', desc: 'Professionelle Innenreinigung deines PCs.' },
+            { id: 2, title: 'Windows 11 Installation', oldPrice: '', price: '15 €', desc: 'Fachgerechte Installation inklusive Updates.' },
+            { id: 3, title: 'Format + Neuinstallation', oldPrice: '20 €', price: '15 €', desc: 'Saubere Neuinstallation des Systems.' },
+            { id: 4, title: 'Alles zusammen', oldPrice: '45 €', price: '30 €', desc: 'Das Komplettpaket zum Sparpreis.' }
         ];
 
-        /* Durum (State) */
         let plans = [];
-        let isLongPress = false;
         let pressTimer;
 
-        /* DOM Elementleri */
-        const themeToggle = document.getElementById('theme-toggle');
-        const plansContainer = document.getElementById('plans-container');
-        const pwdModal = document.getElementById('password-modal');
-        const adminModal = document.getElementById('admin-modal');
-        const pwdInput = document.getElementById('admin-password');
-        const adminFormsContainer = document.getElementById('admin-forms-container');
-
-        /* Uygulamayı Başlat */
         function init() {
-            // LocalStorage'dan planları çek veya varsayılanı yükle
-            const savedPlans = localStorage.getItem('pcServicePlans');
-            if (savedPlans) {
-                plans = JSON.parse(savedPlans);
-            } else {
-                plans = [...defaultPlans];
-            }
+            const savedPlans = localStorage.getItem('pcServicePlansV2');
+            plans = savedPlans ? JSON.parse(savedPlans) : [...defaultPlans];
             renderPlans();
             
-            // Tema ayarı
             const currentTheme = localStorage.getItem('pcServiceTheme') || 'dark';
             document.documentElement.setAttribute('data-theme', currentTheme);
             updateThemeIcon();
         }
 
-        /* Temayı Değiştir */
-        function toggleTheme() {
+        function renderPlans() {
+            const container = document.getElementById('plans-container');
+            container.innerHTML = '';
+            plans.forEach((plan, index) => {
+                const hasDiscount = plan.oldPrice && plan.oldPrice.trim() !== '';
+                container.innerHTML += `
+                    <div class="accordion-item">
+                        <button class="accordion-header" onclick="toggleAccordion(${index})">
+                            <div class="plan-info">
+                                <span class="plan-title">${plan.title}</span>
+                            </div>
+                            <div class="price-container">
+                                ${hasDiscount ? `<span class="old-price">${plan.oldPrice}</span>` : ''}
+                                <span class="current-price">${plan.price}</span>
+                            </div>
+                        </button>
+                        <div class="accordion-content" id="content-${index}">
+                            <p>${plan.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleAccordion(index) {
+            const content = document.getElementById(`content-${index}`);
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+        }
+
+        /* Theme & Admin Logic */
+        const themeBtn = document.getElementById('theme-toggle');
+        
+        themeBtn.addEventListener('mousedown', () => {
+            pressTimer = setTimeout(() => { document.getElementById('password-modal').classList.add('active'); }, 5000);
+        });
+        themeBtn.addEventListener('mouseup', () => { clearTimeout(pressTimer); });
+        themeBtn.addEventListener('click', () => {
             const html = document.documentElement;
             const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('pcServiceTheme', newTheme);
             updateThemeIcon();
-        }
-
-        function updateThemeIcon() {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            themeToggle.innerText = isDark ? '☀️' : '🌙';
-        }
-
-        /* Planları Ön Yüze Çiz (Accordion) */
-        function renderPlans() {
-            plansContainer.innerHTML = '';
-            plans.forEach((plan, index) => {
-                const item = document.createElement('div');
-                item.className = 'accordion-item';
-                item.innerHTML = `
-                    <button class="accordion-header" onclick="toggleAccordion(${index})">
-                        <span>${plan.title}</span>
-                        <span class="plan-price">${plan.price}</span>
-                    </button>
-                    <div class="accordion-content" id="content-${index}">
-                        <p>${plan.desc}</p>
-                    </div>
-                `;
-                plansContainer.appendChild(item);
-            });
-        }
-
-        /* Accordion Aç/Kapa Mantığı */
-        function toggleAccordion(index) {
-            const content = document.getElementById(`content-${index}`);
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
-                // Diğerlerini kapatmak istersen buraya döngü ekleyebilirsin
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        }
-
-        /* --- Admin Paneli Mantığı --- */
-
-        /* 5 Saniye Basılı Tutma Tespiti */
-        function startPress(e) {
-            isLongPress = false;
-            pressTimer = setTimeout(() => {
-                isLongPress = true;
-                showPasswordModal();
-            }, 5000);
-        }
-
-        function cancelPress() {
-            clearTimeout(pressTimer);
-        }
-
-        themeToggle.addEventListener('mousedown', startPress);
-        themeToggle.addEventListener('touchstart', startPress, { passive: true });
-        themeToggle.addEventListener('mouseup', cancelPress);
-        themeToggle.addEventListener('mouseleave', cancelPress);
-        themeToggle.addEventListener('touchend', cancelPress);
-
-        themeToggle.addEventListener('click', (e) => {
-            if (isLongPress) {
-                e.preventDefault();
-                return; // Basılı tutulduysa tema değişmesin
-            }
-            toggleTheme();
         });
 
-        /* Modalları Göster / Gizle */
-        function showPasswordModal() {
-            pwdInput.value = '';
-            pwdModal.classList.add('active');
-            pwdInput.focus();
+        function updateThemeIcon() {
+            themeBtn.innerText = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+        }
+
+        function checkPassword() {
+            if (document.getElementById('admin-password').value === '27O72O12') {
+                document.getElementById('password-modal').classList.remove('active');
+                openAdmin();
+            } else { alert('Falsches Passwort!'); }
+        }
+
+        function openAdmin() {
+            const container = document.getElementById('admin-forms-container');
+            container.innerHTML = '';
+            plans.forEach((plan, index) => {
+                container.innerHTML += `
+                    <div class="admin-plan-card">
+                        <div class="form-group">
+                            <label>Başlık</label>
+                            <input type="text" class="form-control" id="edit-title-${index}" value="${plan.title}">
+                        </div>
+                        <div style="display:flex; gap:10px">
+                            <div class="form-group" style="flex:1">
+                                <label>Eski Fiyat (Boş bırakılabilir)</label>
+                                <input type="text" class="form-control" id="edit-old-${index}" value="${plan.oldPrice}" placeholder="örn: 10 €">
+                            </div>
+                            <div class="form-group" style="flex:1">
+                                <label>Yeni Fiyat</label>
+                                <input type="text" class="form-control" id="edit-price-${index}" value="${plan.price}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama</label>
+                            <textarea class="form-control" id="edit-desc-${index}">${plan.desc}</textarea>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('admin-modal').classList.add('active');
+        }
+
+        function savePlans() {
+            plans = plans.map((p, i) => ({
+                id: p.id,
+                title: document.getElementById(`edit-title-${i}`).value,
+                oldPrice: document.getElementById(`edit-old-${i}`).value,
+                price: document.getElementById(`edit-price-${i}`).value,
+                desc: document.getElementById(`edit-desc-${i}`).value
+            }));
+            localStorage.setItem('pcServicePlansV2', JSON.stringify(plans));
+            renderPlans();
+            closeModals();
         }
 
         function closeModals() {
-            pwdModal.classList.remove('active');
-            adminModal.classList.remove('active');
+            document.getElementById('password-modal').classList.remove('active');
+            document.getElementById('admin-modal').classList.remove('active');
         }
 
-        /* Şifre Kontrolü */
-        function checkPassword() {
-            // Şartta istenen "27O72O12" (Sıfır değil O harfi)
-            if (pwdInput.value === '27O72O12') {
-                pwdModal.classList.remove('active');
-                openAdminPanel();
-            } else {
-                alert('Yanlış şifre!');
-            }
-        }
-
-        /* Admin Panelini Aç ve Formları Oluştur */
-        function openAdminPanel() {
-            adminFormsContainer.innerHTML = '';
-            plans.forEach((plan, index) => {
-                const formGroup = document.createElement('div');
-                formGroup.className = 'admin-plan-card';
-                formGroup.innerHTML = `
-                    <div class="form-group">
-                        <label>Başlık</label>
-                        <input type="text" class="form-control" id="edit-title-${index}" value="${plan.title}">
-                    </div>
-                    <div class="form-group">
-                        <label>Fiyat</label>
-                        <input type="text" class="form-control" id="edit-price-${index}" value="${plan.price}">
-                    </div>
-                    <div class="form-group">
-                        <label>Açıklama</label>
-                        <textarea class="form-control" id="edit-desc-${index}" rows="2">${plan.desc}</textarea>
-                    </div>
-                `;
-                adminFormsContainer.appendChild(formGroup);
-            });
-            adminModal.classList.add('active');
-        }
-
-        /* Değişiklikleri Kaydet */
-        function savePlans() {
-            plans = plans.map((plan, index) => {
-                return {
-                    id: plan.id,
-                    title: document.getElementById(`edit-title-${index}`).value,
-                    price: document.getElementById(`edit-price-${index}`).value,
-                    desc: document.getElementById(`edit-desc-${index}`).value
-                };
-            });
-            
-            localStorage.setItem('pcServicePlans', JSON.stringify(plans));
-            renderPlans();
-            closeModals();
-            alert('Değişiklikler başarıyla kaydedildi!');
-        }
-
-        // Başlangıç fonksiyonunu çağır
         init();
     </script>
 </body>
